@@ -1,0 +1,27 @@
+const { Schema, model } = require("mongoose");
+
+const Tipo_habitacionSchema = Schema({
+  categoria: {
+    type: String,
+    require: [true, "La categoria es obligatoria"],
+    unique: true
+  },
+  camas: {
+    type: Number,
+    require: [true, "La cantidad de camas en obligatoria"],
+  },
+  terraza: {
+    type: Boolean,
+    default: false,
+  },
+  img: {
+    type: String,
+  },
+});
+Tipo_habitacionSchema.methods.toJSON=function(){
+  const{__v,_id,...tipo}=this.toObject();
+  tipo.uid=_id;
+  return tipo;
+}
+
+module.exports = model("Tipo_habitacion", Tipo_habitacionSchema);
