@@ -2,78 +2,101 @@ const { response, request, json } = require("express");
 const bcryptjs = require("bcryptjs");
 
 const Usuario = require("../models/usuario");
+const { notificacionSis } = require("../helpers/notification");
 
-const {validarCampos,validarJWT,esAdminRole,tieneRole}= require( '../middlewares' );
+const usuarioGet = async (req, res = response) => {
+  try {
+    const { limite = 5, desde = 0 } = req.query;
+    const query = { estado: true };
 
-const usuarioGet= async(req,res=response)=>{
-    const {limite=5,desde=0}=req.query;
-    const query={estado: true};
-
-    const[total,usuarios]=await Promise.all([
-        Usuario.countDocuments(query),
-        Usuario.find(query).skip(Number(desde)).limit(Number(limite))
+    const [total, usuarios] = await Promise.all([
+      Usuario.countDocuments(query),
+      Usuario.find(query).skip(Number(desde)).limit(Number(limite)),
     ]);
 
     res.json({
-        total,
-        usuarios
-    })
-}
+      msg: "Ok",
+      total,
+      usuarios,
+    });
+  } catch (error) {
+    res.status(500).json(notificacionSis(error));
+  }
+};
 
+const usuarioPost = async (req = request, res = response) => {
+  try {
+    const { identificacion, nombre, apellido, correo, clave, telefono, rol } =
+      req.body;
+    if (rol == "ADMIN" || rol == "AUX") {
+      res.status(401).json({
+        msg: "error",
+        description: "No tiene permiso para crear usuario",
+      });
+    } else {
+      const usuario = new Usuario({
+        identificacion,
+        nombre,
+        apellido,
+        correo,
+        clave,
+        telefono,
+        rol,
+      });
 
-const usuarioPost= async(req=request,res=response)=>{
-    const{identificacion,nombre,apellido,correo,clave,telefono,rol}= req.body;
-    if(rol=="ADMIN" || rol=="AUX" )
-    {
-        res.status(401).json({
-            msg:"No tiene permiso para crear usuario"
-        })
-    }else{
+      //Encriptacion de clave
+      const salt = bcryptjs.genSaltSync(10);
+      usuario.clave = bcryptjs.hashSync(clave, salt);
 
-  
-    const usuario= new Usuario({identificacion,nombre,apellido,correo,clave,telefono,rol});
+      //guardar en DB
+      await usuario.save();
 
-    //Encriptacion de clave
-    const salt=bcryptjs.genSaltSync(10);
-    usuario.clave = bcryptjs.hashSync(clave, salt);
-
-    //guardar en DB
-    await usuario.save();
-
-    res.json({
-         usuario
-    })
-}
-}
-
-const usuarioPut= async(req,res=response)=>{
-    const {id}=req.params;
-    const{_id,clave,google,correo, ...resto}=req.body;
-
-    if(clave){
-        const salt = bcryptjs.genSaltSync(10);
-        resto.clave = bcryptjs.hashSync(clave, salt);
+      res.json({
+        msg: "Ok",
+        usuario,
+      });
     }
-    const usuarioDB= await Usuario.findByIdAndUpdate(id,resto);
+  } catch (error) {
+    res.status(500).json(notificacionSis(error));
+  }
+};
+
+const usuarioPut = async (req, res = response) => {
+  try {
+    const { id } = req.params;
+    const { _id, clave, google, correo, ...resto } = req.body;
+
+    if (clave) {
+      const salt = bcryptjs.genSaltSync(10);
+      resto.clave = bcryptjs.hashSync(clave, salt);
+    }
+    const usuarioDB = await Usuario.findByIdAndUpdate(id, resto);
     res.json({
-        msg:"Datos actulizados correctamente"
+      msg: "Ok",
+      description: "Datos actulizados correctamente",
     });
+  } catch (error) {
+    res.status(500).json(notificacionSis(error));
+  }
+};
 
-}
-
-const usuarioDelete= async(req,res=response)=>{
-    const {id}=req.params;
+const usuarioDelete = async (req, res = response) => {
+  try {
+    const { id } = req.params;
     console.log(id);
-    const usuario= await Usuario.findByIdAndUpdate(id,{estado:false})
+    const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
     res.json({
-        msg:"Usuario deshabilitado correctamente"
+      msg: "Ok",
+      description: "Usuario deshabilitado correctamente",
     });
-}
+  } catch (error) {
+    res.status(500).json(notificacionSis(error));
+  }
+};
 
-
-module.exports={
-     usuarioGet,
-     usuarioPost,
-     usuarioPut,
-     usuarioDelete
-}
+module.exports = {
+  usuarioGet,
+  usuarioPost,
+  usuarioPut,
+  usuarioDelete,
+};

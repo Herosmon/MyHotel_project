@@ -5,14 +5,16 @@ const esAdminRole =(req=request,res=response, next)=>{
 
    if(! req.usuario){
        return res.status(500).json({
-           msg : 'Se quiere verificar ron sin el token'
+           msg:"error",
+           description : 'Se quiere verificar ron sin el token'
        })
    }
    const {rol,nombre}= req.usuario;
 
    if(rol!=='ADMIN'){
        return res.status(401).json({
-           msg: `${nombre} no es administrador `
+            msg:"error",
+           description: `${nombre} no es administrador `
        })
    }
 
@@ -25,13 +27,15 @@ const tieneRole=(...roles)=>{
     return (req=request,res=response, next)=>{
         if(! req.usuario){
             return res.status(500).json({
-                msg : 'Se quiere verificar ron sin el token'
+                msg:"error",
+                description : 'Se quiere verificar ron sin el token'
             });
         }
 
         if(!roles.includes(req.usuario.rol)){
             return res.status(401).json({
-                msg: `El servicio requiere uno de estos roles ${roles} `
+                msg:"error",
+                description: `El servicio requiere uno de estos roles ${roles} `
             });
         }
         next();

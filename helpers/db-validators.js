@@ -30,7 +30,7 @@ const existeUsuarioPorId = async (id) => {
     }
 }
 
-const  existeTipoHabitacionPorId = async (tipo_habitacion='') => {
+const  existeTipoHabitacion = async (tipo_habitacion='') => {
 
     const existeThabitacion = await Precio_habitacion.findOne({tipo_habitacion});
     if (existeThabitacion) {
@@ -38,11 +38,18 @@ const  existeTipoHabitacionPorId = async (tipo_habitacion='') => {
     }
 }
 
+const existeTipoHabitacionPorId = async (id) => {
 
-const  existeProductoPorId = async (id) => {
+    const existeId = await Tipo_habitacion.findById(id);
+    if (!existeId) {
+        throw new Error(`El ID no existe`)
+    }
+}
 
-    const existeProducto = await Producto.findById(id);
-    if (!existeProducto) {
+const  existePrecioHabitacionPorId = async (id) => {
+
+    const existePrecio = await Precio_habitacion.findById(id);
+    if (!existePrecio) {
         throw new Error(`El ID no existe`)
     }
 }
@@ -78,7 +85,8 @@ module.exports = {
     emailExiste,
     existeUsuarioPorId,
     existeTipoHabitacionPorId,
-    existeProductoPorId,
+    existeTipoHabitacion,
+    existePrecioHabitacionPorId,
     coleccionPermitida,
     Tipo_habitacion_Existe
 }
