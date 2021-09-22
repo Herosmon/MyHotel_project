@@ -9,7 +9,7 @@ class Server {
 
         this.paths={
             auth: '/myhotel/auth',
-            rol:'myhotel/rol',
+            rol:'/myhotel/rol',
             usuario:'/myhotel/usuario',
             // habitacion:'/myhotel/habitacion',
             tipo_habitacion:'/myhotel/tipoH',

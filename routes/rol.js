@@ -4,7 +4,7 @@ const { postRol } = require('../controllers/role');
 const { validarCampos, validarJWT, esAdminRole} = require('../middlewares');
 
 
-const router= Router();
+const router = Router();
 
 router.post('/',
 [
