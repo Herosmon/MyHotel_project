@@ -111,7 +111,7 @@ const olvido_contraseña = async (req = require, res = response) => {
     }
 
     const token = await generarResetJWT(usuario.id);
-    reset = `http://localhost:8080/myhotel/auth/recuperar/${token}`;
+    reset = `https://udmyhotelproject.herokuapp.com/myhotel/auth/recuperar/${token}`;
     const actualizado = await Usuario.findByIdAndUpdate(usuario.id, { reset });
 
     if (!actualizado) {

@@ -4,12 +4,13 @@ const Tipo_habitacion = require("../models/habitacion/tipo_habitacion");
 
 const postTipoHabitacion = async (req, res = response) => {
   try {
-    const { categoria, camas, terraza, img = "" } = req.body;
+    const { categoria, camas, terraza, precio,img = "" } = req.body;
     const tipoHabitacion = new Tipo_habitacion({
       categoria,
       camas,
       terraza,
       img,
+      precio
     });
     //guardar en DB
     await tipoHabitacion.save();

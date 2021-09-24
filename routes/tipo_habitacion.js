@@ -13,12 +13,14 @@ const router = Router();
 
 
 router.get('/',getTipoHabitacion);
+
 router.post('/',
 [
     validarJWT,
     esAdminRole,
     check('categoria','La categoria es obligatoria').not().isEmpty(),
     check('categoria').custom(Tipo_habitacion_Existe),
+    check('precio','El precio es obligatorio').not().isEmpty(),
     validarCampos
 ]
 ,postTipoHabitacion);

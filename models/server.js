@@ -11,9 +11,9 @@ class Server {
             auth: '/myhotel/auth',
             rol:'/myhotel/rol',
             usuario:'/myhotel/usuario',
-            // habitacion:'/myhotel/habitacion',
+            habitacion:'/myhotel/habitacion',
             tipo_habitacion:'/myhotel/tipoH',
-            precio_habitacion:'/myhotel/precioH'
+           
             
 
         }
@@ -52,7 +52,7 @@ class Server {
         this.app.use(this.paths.usuario, require("../routes/usuario"));
         this.app.use(this.paths.rol, require("../routes/rol"));
         this.app.use(this.paths.tipo_habitacion, require("../routes/tipo_habitacion"));
-        this.app.use(this.paths.precio_habitacion, require("../routes/precio_habitacion"));
+        this.app.use(this.paths.habitacion, require("../routes/habitacion"));
         
     }
 
@@ -63,5 +63,4 @@ class Server {
     }
 }
 
-
-module.exports = Server;
+module.exports= Server;

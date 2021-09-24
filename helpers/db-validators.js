@@ -2,7 +2,7 @@
 
 
 // const { Categoria, Producto } = require('../models');
-const { Precio_habitacion } = require('../models');
+const { Precio_habitacion, Habitacion } = require('../models');
 const Tipo_habitacion = require('../models/habitacion/tipo_habitacion');
 const Role = require('../models/rol');
 const Usuario = require('../models/usuario');
@@ -46,13 +46,22 @@ const existeTipoHabitacionPorId = async (id) => {
     }
 }
 
-const  existePrecioHabitacionPorId = async (id) => {
+const  existeNumeroHabitacion = async (numero) => {
+  
+    const existeNumero = await Habitacion.findOne({numero})
+    if (existeNumero) {
+        throw new Error(`El numero de habitación ya esta registrado `)
+    }
+}
 
-    const existePrecio = await Precio_habitacion.findById(id);
-    if (!existePrecio) {
+const existeHabitacionPorId = async (id) => {
+
+    const existeId = await Habitacion.findById(id);
+    if (!existeId) {
         throw new Error(`El ID no existe`)
     }
 }
+
 
 // Validar colecciones permitidas
 
@@ -86,7 +95,8 @@ module.exports = {
     existeUsuarioPorId,
     existeTipoHabitacionPorId,
     existeTipoHabitacion,
-    existePrecioHabitacionPorId,
+    existeNumeroHabitacion,
     coleccionPermitida,
-    Tipo_habitacion_Existe
+    Tipo_habitacion_Existe,
+    existeHabitacionPorId
 }

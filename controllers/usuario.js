@@ -3,17 +3,18 @@ const bcryptjs = require("bcryptjs");
 
 const Usuario = require("../models/usuario");
 const { notificacionSis } = require("../helpers/notification");
+const { firstUpper } = require("../helpers/FirstToUppercase");
 
 const usuarioGet = async (req, res = response) => {
   try {
     const { limite = 5, desde = 0 } = req.query;
     const query = { estado: true };
-
+   
     const [total, usuarios] = await Promise.all([
       Usuario.countDocuments(query),
       Usuario.find(query).skip(Number(desde)).limit(Number(limite)),
     ]);
-
+    
     res.json({
       msg: "Ok",
       total,
@@ -34,10 +35,14 @@ const usuarioPost = async (req = request, res = response) => {
         description: "No tiene permiso para crear usuario",
       });
     } else {
+
+     
+      
+
       const usuario = new Usuario({
         identificacion,
-        nombre,
-        apellido,
+        nombre: firstUpper(nombre),
+        apellido:firstUpper(apellido),
         correo,
         clave,
         telefono,
@@ -64,12 +69,20 @@ const usuarioPost = async (req = request, res = response) => {
 const usuarioPut = async (req, res = response) => {
   try {
     const { id } = req.params;
-    const { _id, clave, google, correo, ...resto } = req.body;
+    let { _id, clave, google, correo, ...resto } = req.body;
 
     if (clave) {
       const salt = bcryptjs.genSaltSync(10);
       resto.clave = bcryptjs.hashSync(clave, salt);
     }
+    if(resto.nombre){
+      resto.nombre= firstUpper(resto.nombre)
+    }
+    else if(resto.apellido){
+      resto.apellido= firstUpper(resto.apellido)
+    }
+
+
     const usuarioDB = await Usuario.findByIdAndUpdate(id, resto);
     res.json({
       msg: "Ok",

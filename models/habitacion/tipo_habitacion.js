@@ -14,6 +14,10 @@ const Tipo_habitacionSchema = Schema({
     type: Boolean,
     default: false,
   },
+  precio: {
+    type: Number,
+    require: [true, "El precio es obligatorio"],
+  },
   img: {
     type: String,
   },

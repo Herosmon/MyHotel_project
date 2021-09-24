@@ -9,6 +9,10 @@ const ReservaSchema = Schema({
     type: Date,
     require: ["true", "La fecha de finalización es requerida"],
   },
+  precio: {
+    type: Number,
+    require: [true, "El precio es obligatorio"],
+  },
   usuario: {
     type: Schema.Types.ObjectId,
     ref: "Usuario",
@@ -19,6 +23,10 @@ const ReservaSchema = Schema({
     ref: "Habitacion",
     require: true,
   },
+  estado:{
+    type: Boolean,
+    default: true
+},
 });
 ReservaSchema.methods.toJSON=function(){
     const{__v,_id,...reserva}=this.toObject();

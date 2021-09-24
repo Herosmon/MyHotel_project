@@ -4,6 +4,7 @@ const HabitacionSchema = Schema({
   numero: {
     type: Number,
     require: [true, "El numero es obligatorio"],
+    unique: true
   },
   tipo_habitacion:{
       type:  Schema.Types.ObjectId,
