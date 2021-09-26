@@ -12,7 +12,11 @@ const getHabitacionLibre = async (req, res = response) => {
        
         const [total, habitacion] = await Promise.all([
           Habitacion.countDocuments(query),
-          Habitacion.find(query).skip(Number(desde)).limit(Number(limite)),
+          Habitacion
+            .find(query)
+            .populate('tipo_habitacion','categoria')
+            .skip(Number(desde))
+            .limit(Number(limite)),
         ]);
     
         res.json({
@@ -24,6 +28,32 @@ const getHabitacionLibre = async (req, res = response) => {
         res.status(500).json(notificacionSis(error));
       }
 }
+
+const getHabitacionLibrePorTipo = async (req, res = response) => {
+  try {
+      const { limite = 5, desde = 0 , id } = req.query;
+      const query = { 
+        ocupado: false,
+        tipo_habitacion: id
+       };
+     
+      const [total, habitacion] = await Promise.all([
+        Habitacion.countDocuments(query),
+        Habitacion.find(query).skip(Number(desde)).limit(Number(limite)),
+      ]);
+  
+      res.json({
+        msg: "Ok",
+        total,
+        habitacion,
+      });
+    } catch (error) {
+      res.status(500).json(notificacionSis(error));
+    }
+}
+
+
+
 
 
 
@@ -69,5 +99,6 @@ const postHabitacion = async (req, res = response) => {
   module.exports={
     getHabitacionLibre,
     postHabitacion,
-    putHabitacion
+    putHabitacion,
+    getHabitacionLibrePorTipo
   }

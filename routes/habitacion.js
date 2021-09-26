@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { postHabitacion, getHabitacionLibre, putHabitacion } = require("../controllers/habitacion");
+const { postHabitacion, getHabitacionLibre, putHabitacion, getHabitacionLibrePorTipo } = require("../controllers/habitacion");
 const { existeNumeroHabitacion, existeTipoHabitacionPorId, esRoleValido, existeHabitacionPorId } = require("../helpers/db-validators");
 const { validarJWT, esAdminRole, validarCampos, tieneRole } = require("../middlewares");
 
@@ -27,6 +27,12 @@ router.post(
 router.get(
     "/",
     getHabitacionLibre
+)
+
+router.get(
+    "/:id",
+    [check('id').isMongoId(),]
+    ,getHabitacionLibrePorTipo
 )
 
 
