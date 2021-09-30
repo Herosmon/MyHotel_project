@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors');
 const { dbConnection } = require("../database/config");
+const fileUpload = require("express-fileupload");
 class Server {
     constructor() {
 
@@ -13,6 +14,9 @@ class Server {
             usuario:'/myhotel/usuario',
             habitacion:'/myhotel/habitacion',
             tipo_habitacion:'/myhotel/tipoH',
+            upload:'/myhotel/upload',
+            servicio:'/myhotel/servicio',
+            reserva:'/myhotel/reserva'
            
             
 
@@ -41,6 +45,12 @@ class Server {
         this.app.use(express.json());
         //directorio publico
         this.app.use(express.static('public'));
+
+        // carga de archivos
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/'
+        }));
     }
     async conectarBD() {
         await dbConnection();
@@ -53,7 +63,8 @@ class Server {
         this.app.use(this.paths.rol, require("../routes/rol"));
         this.app.use(this.paths.tipo_habitacion, require("../routes/tipo_habitacion"));
         this.app.use(this.paths.habitacion, require("../routes/habitacion"));
-        
+        this.app.use(this.paths.upload, require("../routes/upload"));
+        this.app.use(this.paths.servicio, require("../routes/servicio"));
     }
 
     listen() {

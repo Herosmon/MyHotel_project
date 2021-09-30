@@ -90,7 +90,31 @@ const postHabitacion = async (req, res = response) => {
     }
   };
 
-
+  const deleteHabitacion = async (req, res = response) => {
+    try {
+      const { id } = req.params;
+  
+      const {ocupado} =  await Habitacion.findById(id);
+      const habitacion = await Habitacion.findByIdAndUpdate(id, { ocupado: !ocupado });
+  
+      if(!ocupado===false)
+      {
+        res.json({
+          msg: "Ok",
+          description: "Habitacion habilitada correctamente",
+        });
+  
+      }else{
+        res.json({
+          msg: "Ok",
+          description: "Habitacion deshabilitada correctamente",
+        });
+      }
+      
+    } catch (error) {
+      res.status(500).json(notificacionSis(error));
+    }
+  };
 
 
 
@@ -100,5 +124,6 @@ const postHabitacion = async (req, res = response) => {
     getHabitacionLibre,
     postHabitacion,
     putHabitacion,
-    getHabitacionLibrePorTipo
+    getHabitacionLibrePorTipo,
+    deleteHabitacion
   }

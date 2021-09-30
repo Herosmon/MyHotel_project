@@ -102,12 +102,24 @@ const usuarioPut = async (req, res = response) => {
 const usuarioDelete = async (req, res = response) => {
   try {
     const { id } = req.params;
-    console.log(id);
-    const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
-    res.json({
-      msg: "Ok",
-      description: "Usuario deshabilitado correctamente",
-    });
+
+    const {estado} =  await Usuario.findById(id);
+    const usuario = await Usuario.findByIdAndUpdate(id, { estado: !estado });
+
+    if(!estado===true)
+    {
+      res.json({
+        msg: "Ok",
+        description: "Usuario habilitado correctamente",
+      });
+
+    }else{
+      res.json({
+        msg: "Ok",
+        description: "Usuario deshabilitado correctamente",
+      });
+    }
+    
   } catch (error) {
     res.status(500).json(notificacionSis(error));
   }

@@ -2,7 +2,7 @@
 
 const {Router}= require('express');
 const { check } = require('express-validator');
-const { postTipoHabitacion, getTipoHabitacion, putTipoHabitacion } = require('../controllers/tipo_habitacion');
+const { postTipoHabitacion, getTipoHabitacion, putTipoHabitacion, deleteTipoHabitacion } = require('../controllers/tipo_habitacion');
 const { Tipo_habitacion_Existe, existeTipoHabitacionPorId } = require('../helpers/db-validators');
 const { validarCampos, validarJWT, esAdminRole } = require('../middlewares');
 
@@ -33,6 +33,13 @@ router.put('/:id',[
     validarCampos
 ],putTipoHabitacion)
 
+router.delete('/:id', [
+    validarJWT,
+    esAdminRole,
+    check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom(existeTipoHabitacionPorId),
+    validarCampos,
+], deleteTipoHabitacion);
 
 
 

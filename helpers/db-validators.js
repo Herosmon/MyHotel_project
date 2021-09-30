@@ -5,7 +5,9 @@
 const { Precio_habitacion, Habitacion } = require('../models');
 const Tipo_habitacion = require('../models/habitacion/tipo_habitacion');
 const Role = require('../models/rol');
+const Servicio = require('../models/servicio');
 const Usuario = require('../models/usuario');
+const { firstUpper } = require('./FirstToUppercase');
 
 const esRoleValido = async (rol = '') => {
     const existeRol = await Role.findOne({ rol });
@@ -89,6 +91,27 @@ const Tipo_habitacion_Existe = async (categoria = '') => {
 
   // esRoleValido,
 
+
+
+  //SERVICIOS
+
+  const existeServicioPorNombre = async (nombre) => {
+
+    const existe = await Servicio.findOne({nombre: firstUpper(nombre)});
+    if (existe) {
+        throw new Error(`El Servicio con nombre ${nombre} ya se encuentra registrado`)
+    }
+}
+
+
+const existeServicioPorId = async (id) => {
+
+    const existeId = await Servicio.findById(id);
+    if (!existeId) {
+        throw new Error(`El ID no existe`)
+    }
+}
+
 module.exports = {
     esRoleValido,
     emailExiste,
@@ -98,5 +121,7 @@ module.exports = {
     existeNumeroHabitacion,
     coleccionPermitida,
     Tipo_habitacion_Existe,
-    existeHabitacionPorId
+    existeHabitacionPorId,
+    existeServicioPorNombre,
+    existeServicioPorId
 }

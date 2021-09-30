@@ -57,11 +57,37 @@ const putTipoHabitacion = async (req, res = response) => {
     res.status(500).json(notificacionSis(error));
   }
 
+};
 
+const deleteTipoHabitacion = async (req, res = response) => {
+  try {
+    const { id } = req.params;
+
+    const {estado} =  await Tipo_habitacion.findById(id);
+    const tipo = await Tipo_habitacion.findByIdAndUpdate(id, { estado: !estado });
+
+    if(!estado===true)
+    {
+      res.json({
+        msg: "Ok",
+        description: "Tipo de habitacion habilitado correctamente",
+      });
+
+    }else{
+      res.json({
+        msg: "Ok",
+        description: "Tipo de habitacion deshabilitado correctamente",
+      });
+    }
+    
+  } catch (error) {
+    res.status(500).json(notificacionSis(error));
+  }
 };
 
 module.exports = {
   postTipoHabitacion,
   getTipoHabitacion,
   putTipoHabitacion,
+  deleteTipoHabitacion
 };

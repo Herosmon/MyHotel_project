@@ -21,6 +21,10 @@ const Tipo_habitacionSchema = Schema({
   img: {
     type: String,
   },
+  estado:{
+    type:Boolean,
+    default:true
+  }
 });
 Tipo_habitacionSchema.methods.toJSON=function(){
   const{__v,_id,...tipo}=this.toObject();

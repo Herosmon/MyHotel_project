@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { postHabitacion, getHabitacionLibre, putHabitacion, getHabitacionLibrePorTipo } = require("../controllers/habitacion");
+const { postHabitacion, getHabitacionLibre, putHabitacion, getHabitacionLibrePorTipo, deleteHabitacion } = require("../controllers/habitacion");
 const { existeNumeroHabitacion, existeTipoHabitacionPorId, esRoleValido, existeHabitacionPorId } = require("../helpers/db-validators");
 const { validarJWT, esAdminRole, validarCampos, tieneRole } = require("../middlewares");
 
@@ -47,5 +47,15 @@ router.put(
     ]
     ,putHabitacion
     )
+
+
+    router.delete('/:id', [
+        validarJWT,
+        esAdminRole,
+        check('id', 'No es un ID valido').isMongoId(),
+        check('id').custom(existeHabitacionPorId),
+        validarCampos,
+    ], deleteHabitacion);
+    
 
 module.exports = router;

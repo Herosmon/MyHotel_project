@@ -15,6 +15,14 @@ const ServicioSchema= Schema({
         type:Number,
         require:[true,'El precio es obligatorio']
     },
+    img:{
+        type: String,
+        default:""
+    },
+    estado:{
+        type: Boolean,
+        default: true
+    }
 
 })
 ServicioSchema.methods.toJSON=function(){

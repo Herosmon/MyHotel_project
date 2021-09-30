@@ -32,6 +32,7 @@ const UsuarioSchema= Schema({
     },
     img:{
         type: String,
+        default:""
     },
     estado:{
         type: Boolean,
