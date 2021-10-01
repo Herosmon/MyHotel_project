@@ -25,8 +25,8 @@ router.get("/recuperar/:id", menu_recuperar_contraseña);
 router.put(
   "/olvido",
   [
-    check("id", "id es obligatorio").not().isEmpty(),
     check("correo", "El correo es obligatorio").isEmail(),
+    validarCampos
   ],
   olvido_contraseña
 );
@@ -36,6 +36,7 @@ router.put(
   [
     check("c", "url es obligatorio").not().isEmpty(),
     check("newPassword", "La contraseña es obligatoria").not().isEmpty(),
+    validarCampos
   ],
   recuperar_contraseña
 );

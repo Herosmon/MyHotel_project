@@ -1,6 +1,5 @@
 const {Schema,model}= require('mongoose');
 
-
 const ServicioSchema= Schema({
     nombre:{
         type: String,
@@ -30,6 +29,5 @@ ServicioSchema.methods.toJSON=function(){
     servicio.uid=_id;
     return servicio;
 }
-
 
 module.exports= model('Servicio',ServicioSchema);

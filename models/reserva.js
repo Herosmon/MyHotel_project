@@ -23,15 +23,15 @@ const ReservaSchema = Schema({
     ref: "Habitacion",
     require: true,
   },
-  estado:{
+  estado: {
     type: Boolean,
-    default: true
-},
+    default: true,
+  },
 });
-ReservaSchema.methods.toJSON=function(){
-    const{__v,_id,...reserva}=this.toObject();
-    reserva.uid=_id;
-    return reserva;
-}
+ReservaSchema.methods.toJSON = function () {
+  const { __v, _id, ...reserva } = this.toObject();
+  reserva.uid = _id;
+  return reserva;
+};
 
 module.exports = model("Reserva", ReservaSchema);

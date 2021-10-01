@@ -14,10 +14,10 @@ const postTipoHabitacion = async (req, res = response) => {
       precio
     });
     //guardar en DB
-    await tipoHabitacion.save();
+    const result =await tipoHabitacion.save();
     res.json({
       msg: "ok",
-      tipoHabitacion,
+      res: result.id,
     });
   } catch (error) {
     res.status(500).json(notificacionSis(error));

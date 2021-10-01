@@ -14,14 +14,14 @@ const login_cliente = async (req, res = response) => {
     const usuario = await Usuario.findOne({ correo });
     if (!usuario) {
       return res.status(400).json({
-        msg: "error crendeciales",
+        msg: "error credenciales",
         description: "Usuario o Contraseña no son correctos - correo",
       });
     }
     //verificar estado del cliente
     if (!usuario.estado) {
       return res.status(400).json({
-        msg: "error crendeciales",
+        msg: "error credenciales",
         description: "Usuario o Contraseña no son correctos - estado: false",
       });
     }
@@ -140,7 +140,7 @@ const olvido_contraseña = async (req = require, res = response) => {
     }
 
     return res.status(200).json({
-      msg:'Ok',
+      msg: "Ok",
       message,
     });
   } catch (error) {

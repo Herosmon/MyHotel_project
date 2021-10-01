@@ -4,7 +4,7 @@ const Tipo_habitacionSchema = Schema({
   categoria: {
     type: String,
     require: [true, "La categoria es obligatoria"],
-    unique: true
+    unique: true,
   },
   camas: {
     type: Number,
@@ -21,15 +21,15 @@ const Tipo_habitacionSchema = Schema({
   img: {
     type: String,
   },
-  estado:{
-    type:Boolean,
-    default:true
-  }
+  estado: {
+    type: Boolean,
+    default: true,
+  },
 });
-Tipo_habitacionSchema.methods.toJSON=function(){
-  const{__v,_id,...tipo}=this.toObject();
-  tipo.uid=_id;
+Tipo_habitacionSchema.methods.toJSON = function () {
+  const { __v, _id, ...tipo } = this.toObject();
+  tipo.uid = _id;
   return tipo;
-}
+};
 
 module.exports = model("Tipo_habitacion", Tipo_habitacionSchema);
