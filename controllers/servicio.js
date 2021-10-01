@@ -42,6 +42,21 @@ const postServicio = async (req, res = response) => {
     }
   };
 
+  const getServicioEspecifico = async (req, res = response) => {
+    try {
+      const { id } = req.params;
+  
+      const servicio  = await Servicio.findById(id);
+      
+      res.json({
+        msg: "Ok",
+        servicio,
+      });
+    } catch (error) {
+      res.status(500).json(notificacionSis(error));
+    }
+  };
+
   const putServicio = async (req, res = response) => {
     try {
       const { id } = req.params;
@@ -91,6 +106,8 @@ const postServicio = async (req, res = response) => {
 module.exports={
     postServicio,
     getServicio,
+    getServicioEspecifico,
     putServicio,
-    deleteServicio
+    deleteServicio,
+    
 }

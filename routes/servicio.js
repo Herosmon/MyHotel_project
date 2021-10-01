@@ -1,6 +1,6 @@
 const {Router}= require('express');
 const { check } = require('express-validator');
-const { postServicio, getServicio, putServicio, deleteServicio } = require('../controllers/servicio');
+const { postServicio, getServicio, putServicio, deleteServicio, getServicioEspecifico } = require('../controllers/servicio');
 const { existeServicioPorNombre, existeServicioPorId } = require('../helpers/db-validators');
 const { validarCampos, validarJWT, esAdminRole} = require('../middlewares');
 
@@ -10,7 +10,14 @@ const router = Router();
 
 router.get('/',getServicio)
 
-
+router.get('/:id',[
+    // validarJWT,
+    // esAdminRole,
+    check("id",'No es un ID valido').isMongoId(),
+    check("id").custom(existeServicioPorId),
+    validarCampos
+]
+,getServicioEspecifico);
 
 router.post('/',
 [

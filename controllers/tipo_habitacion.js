@@ -82,7 +82,6 @@ const putTipoHabitacion = async (req, res = response) => {
 const deleteTipoHabitacion = async (req, res = response) => {
   try {
     const { id } = req.params;
-
     const {estado} =  await Tipo_habitacion.findById(id);
     const tipo = await Tipo_habitacion.findByIdAndUpdate(id, { estado: !estado });
 
