@@ -43,6 +43,27 @@ const getTipoHabitacion = async (req, res = response) => {
   }
 };
 
+const getTipoHabitacionEspecifico = async (req, res = response) => {
+  try {
+    const { id } = req.params;
+
+    const habitacion  = await Tipo_habitacion.findById(id);
+    
+    res.json({
+      msg: "Ok",
+      habitacion,
+    });
+  } catch (error) {
+    res.status(500).json(notificacionSis(error));
+  }
+};
+
+
+
+
+
+
+
 const putTipoHabitacion = async (req, res = response) => {
   try {
     const { id } = req.params;
@@ -56,7 +77,6 @@ const putTipoHabitacion = async (req, res = response) => {
   } catch (error) {
     res.status(500).json(notificacionSis(error));
   }
-
 };
 
 const deleteTipoHabitacion = async (req, res = response) => {
@@ -89,5 +109,6 @@ module.exports = {
   postTipoHabitacion,
   getTipoHabitacion,
   putTipoHabitacion,
-  deleteTipoHabitacion
+  deleteTipoHabitacion,
+  getTipoHabitacionEspecifico
 };
