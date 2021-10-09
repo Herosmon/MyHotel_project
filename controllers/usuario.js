@@ -34,7 +34,7 @@ const usuarioGet = async (req, res = response) => {
 
 const usuarioPost = async (req = request, res = response) => {
   try {
-    const {  nombre, apellido, correo, clave, rol } = req.body;
+    const { identificacion, nombre, apellido, correo, clave, rol } = req.body;
     if (rol == "ADMIN" ) {
       res.status(401).json({
         msg: "error",
@@ -42,7 +42,7 @@ const usuarioPost = async (req = request, res = response) => {
       });
     } else {
       const usuario = new Usuario({
-       
+        identificacion,
         nombre: firstUpper(nombre),
         apellido: firstUpper(apellido),
         correo,

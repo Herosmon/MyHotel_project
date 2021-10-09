@@ -17,7 +17,7 @@ const Servicio = require('../models/servicio');
 
 const actualizarImagenCloudinary = async (req, res = response) => {
   const { id, coleccion } = req.params;
-
+  const {uri}= req.body;
   let modelo;
 
   switch (coleccion) {
@@ -60,10 +60,19 @@ const actualizarImagenCloudinary = async (req, res = response) => {
           const nombre= nombreArr[nombreArr.length-1];
           const [public_id]=nombre.split('.')
           cluoudnary.uploader.destroy(public_id);
+
      }
-     const {tempFilePath}= req.files.archivo
-     const  {secure_url}= await cluoudnary.uploader.upload(tempFilePath)
-     modelo.img = secure_url;
+
+     if(!uri){
+      const {tempFilePath}= req.files.archivo
+      const  {secure_url}= await cluoudnary.uploader.upload(tempFilePath)
+      modelo.img = secure_url;
+     }else{
+      
+      const  {secure_url}= await cluoudnary.uploader.upload(uri)
+      modelo.img = secure_url;
+     }
+    
 
      await modelo.save();
      res.json(modelo);
@@ -74,13 +83,14 @@ const actualizarImagenCloudinary = async (req, res = response) => {
     }
 
 
+};
 
 
-
-
-
+const menu_subir_archivo = async (req, res = response) => {
+  res.sendFile(path.resolve(__dirname, "../public/subir_archivo.html"));
 };
 
 module.exports = {
   actualizarImagenCloudinary,
+  menu_subir_archivo
 };

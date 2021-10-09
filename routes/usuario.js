@@ -10,7 +10,7 @@ router.get('/',usuarioGet);
 
 router.post('/',
     [
-       
+    
         check('nombre', 'El nombre es obligatorio').notEmpty(),
         check('apellido', 'El apellido es obligatorio').notEmpty(),
         check('correo', 'El correo ingresado no es valido').isEmail(),

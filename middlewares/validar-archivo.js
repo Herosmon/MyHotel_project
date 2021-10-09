@@ -2,7 +2,7 @@ const { response } = require("express")
 
 
 const validarArchivoSubir=(req,res=response, next)=>{
-    if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo) {
+    if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo ||  Object.keys(req.files).length === 0) {
         return  res.status(400).json({ msg: "No hay archivos en la petición -validarArchivoSubir" });
        
       }
