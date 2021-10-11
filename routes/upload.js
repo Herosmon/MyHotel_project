@@ -1,19 +1,19 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { actualizarImagenCloudinary, menu_subir_archivo} = require('../controllers/uploads');
+const { actualizarImagenCloudinary} = require('../controllers/uploads');
 const { coleccionPermitida } = require('../helpers/db-validators');
 const { validarArchivoSubir, validarCampos } = require('../middlewares');
 
 const router= Router();
 
 router.put('/:coleccion/:id',[
-    // validarArchivoSubir,
+     validarArchivoSubir,
     check('id','El ID debe de ser mongo').isMongoId(),
-     check('coleccion').custom(c=>coleccionPermitida(c,['usuario', 'tipo_habitacion'])),
+     check('coleccion').custom(c=>coleccionPermitida(c,['usuario', 'tipo_habitacion','servicio'])),
     validarCampos
 ],actualizarImagenCloudinary);
 
-router.get("/subir_archivo", menu_subir_archivo);
+
 
 
 

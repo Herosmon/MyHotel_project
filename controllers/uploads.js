@@ -86,11 +86,8 @@ const actualizarImagenCloudinary = async (req, res = response) => {
 };
 
 
-const menu_subir_archivo = async (req, res = response) => {
-  res.sendFile(path.resolve(__dirname, "../public/subir_archivo.html"));
-};
+
 
 module.exports = {
   actualizarImagenCloudinary,
-  menu_subir_archivo
 };
