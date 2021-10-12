@@ -52,6 +52,25 @@ const getHabitacionLibrePorTipo = async (req, res = response) => {
     }
 }
 
+const getHabitacionEspecifico = async (req, res = response) => {
+  try {
+    const { id } = req.params;
+
+    let habitacion  = await Habitacion.findById(id)
+    .populate('tipo_habitacion')
+
+   const{categoria, img}=habitacion.tipo_habitacion;
+
+    habitacion.tipo_habitacion={categoria, img}
+    res.json({
+      msg: "Ok",
+      habitacion,
+    });
+  } catch (error) {
+    res.status(500).json(notificacionSis(error));
+  }
+};
+
 
 
 
@@ -122,8 +141,9 @@ const postHabitacion = async (req, res = response) => {
 
   module.exports={
     getHabitacionLibre,
+    getHabitacionEspecifico,
+    getHabitacionLibrePorTipo,
     postHabitacion,
     putHabitacion,
-    getHabitacionLibrePorTipo,
     deleteHabitacion
   }

@@ -56,13 +56,6 @@ const  existeNumeroHabitacion = async (numero) => {
     }
 }
 
-const existeHabitacionPorId = async (id) => {
-
-    const existeId = await Habitacion.findById(id);
-    if (!existeId) {
-        throw new Error(`El ID no existe`)
-    }
-}
 
 
 // Validar colecciones permitidas
@@ -111,6 +104,18 @@ const existeServicioPorId = async (id) => {
         throw new Error(`El ID no existe`)
     }
 }
+
+
+//HABITACION
+const existeHabitacionPorId = async (id) => {
+
+    const existeId = await Habitacion.findById(id);
+    if (!existeId) {
+        throw new Error(`El ID no existe`)
+    }
+}
+
+
 
 module.exports = {
     esRoleValido,
