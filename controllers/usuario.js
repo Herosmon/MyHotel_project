@@ -32,6 +32,22 @@ const usuarioGet = async (req, res = response) => {
   }
 };
 
+const getUsuarioEspecifico = async (req, res = response) => {
+  try {
+    const { id } = req.params;
+
+    const {nombre,apellido,correo,estado,img,telefono}  = await Usuario.findById(id);
+  
+    const resp={nombre,apellido,correo,estado,img,telefono}
+    res.json({
+      msg: "Ok",
+      resp,
+    });
+  } catch (error) {
+    res.status(500).json(notificacionSis(error));
+  }
+};
+
 const usuarioPost = async (req = request, res = response) => {
   try {
     const { identificacion, nombre, apellido, correo, clave, rol } = req.body;
@@ -117,6 +133,7 @@ const usuarioDelete = async (req, res = response) => {
 
 module.exports = {
   usuarioGet,
+  getUsuarioEspecifico,
   usuarioPost,
   usuarioPut,
   usuarioDelete,
