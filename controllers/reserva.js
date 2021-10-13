@@ -13,8 +13,8 @@ const  postReserva =async (req = request, res = response) => {
     const usuario=(req.usuario.id);
     // VALIDACION DE FECHAS 
     const hoy = moment().format("YYYY-MM-D");
-    moment(fecha_inicio).format("YYYY-MM-D");
-     moment(fecha_fin).format("YYYY-MM-D");
+   const fi= moment(fecha_inicio).format("YYYY-MM-D");
+   const ff=   moment(fecha_fin).format("YYYY-MM-D");
 
    if(!moment(fecha_inicio).isSameOrAfter(hoy)){
        return res.status(402).json({
@@ -47,8 +47,8 @@ const  postReserva =async (req = request, res = response) => {
   const valor_total_reserva=precio*cantidad_dias
     
   const reserva = new Reserva({
-    fecha_inicio,
-    fecha_fin,
+    fechaInicio:fi,
+    fechaFin:ff,
     precio:valor_total_reserva,
     usuario,
     habitacion
