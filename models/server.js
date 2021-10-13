@@ -17,6 +17,7 @@ class Server {
             upload:'/myhotel/upload',
             servicio:'/myhotel/servicio',
             reserva:'/myhotel/reserva'
+
            
             
 
@@ -65,6 +66,7 @@ class Server {
         this.app.use(this.paths.habitacion, require("../routes/habitacion"));
         this.app.use(this.paths.upload, require("../routes/upload"));
         this.app.use(this.paths.servicio, require("../routes/servicio"));
+        this.app.use(this.paths.reserva, require("../routes/reserva"));
     }
 
     listen() {

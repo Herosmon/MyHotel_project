@@ -31,7 +31,8 @@ const getHabitacionLibre = async (req, res = response) => {
 
 const getHabitacionLibrePorTipo = async (req, res = response) => {
   try {
-      const { limite = 5, desde = 0 , id } = req.query;
+      const { limite = 5, desde = 0  } = req.query;
+      const {id} = req.params;
       const query = { 
         ocupado: false,
         tipo_habitacion: id

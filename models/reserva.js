@@ -24,8 +24,8 @@ const ReservaSchema = Schema({
     require: true,
   },
   estado: {
-    type: Boolean,
-    default: true,
+    type: String,
+    default: "activa",
   },
 });
 ReservaSchema.methods.toJSON = function () {

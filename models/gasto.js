@@ -4,7 +4,7 @@ const GastoSchema = Schema({
   cantidad: {
     type: Number,
     require: [true, "El numero es obligatorio"],
-    unique: true,
+     default: 1
   },
   valor_total: {
     type: Number,
