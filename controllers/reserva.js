@@ -2,7 +2,8 @@ const { response, request } = require("express");
 const moment = require("moment");
 
 const { notificacionSis } = require("../helpers/notification");
-const { Habitacion } = require("../models");
+const { Habitacion, Tipo_habitacion } = require("../models");
+const tipo_habitacion = require("../models/habitacion/tipo_habitacion");
 
 const Reserva = require("../models/reserva");
 const { getHabitacionLibrePorTipo } = require("./habitacion");
@@ -19,13 +20,13 @@ const  postReserva =async (req = request, res = response) => {
    if(!moment(fecha_inicio).isSameOrAfter(hoy)){
        return res.status(402).json({
            msg: "Error fecha inicial",
-           descripcion:'La fecha debe ser igual o posterior a la actual'
+           description:'La fecha debe ser igual o posterior a la actual'
        })
    }
    if(!moment(fecha_fin).isAfter(hoy)){
     return res.status(402).json({
         msg: "Error fecha fin",
-        descripcion:'La fecha debe ser posterior a la actual'
+        description:'La fecha debe ser posterior a la actual'
         })
     }
   const cantidad_dias= moment(fecha_fin).diff(fecha_inicio, "days" )
@@ -39,7 +40,7 @@ const  postReserva =async (req = request, res = response) => {
   if(!hab){
     return res.status(402).json({
       msg: 'Error disponibilidad habitacion',
-      descripcion:'No hay habitaciones disponibles'
+      description:'No hay habitaciones disponibles'
     })
   }
   const {precio}=hab.tipo_habitacion;
@@ -113,8 +114,29 @@ const getReservaCliente = async (req = request, res = response) =>{
   }
 }
 
+const getReservaEspecifica = async (req, res = response) => {
+  try {
+    const { id } = req.params;
+
+    let reserva  = await Reserva.findById(id).populate('habitacion');
+    let{habitacion}= reserva;
+    const  {categoria,img}= await Tipo_habitacion.findById(habitacion.tipo_habitacion);
+    const tipo_habitacion={categoria,img};
+    
+
+    res.json({
+      msg: "Ok",
+      reserva,
+      tipo_habitacion
+    });
+  } catch (error) {
+    res.status(500).json(notificacionSis(error));
+  }
+};
+
 module.exports = {
   postReserva,
   putCancelarReserva,
-  getReservaCliente
+  getReservaCliente,
+  getReservaEspecifica
 };

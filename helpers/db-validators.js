@@ -2,7 +2,7 @@
 
 
 // const { Categoria, Producto } = require('../models');
-const { Precio_habitacion, Habitacion } = require('../models');
+const { Precio_habitacion, Habitacion, Reserva } = require('../models');
 const Tipo_habitacion = require('../models/habitacion/tipo_habitacion');
 const Role = require('../models/rol');
 const Servicio = require('../models/servicio');
@@ -117,6 +117,18 @@ const existeHabitacionPorId = async (id) => {
 
 
 
+//RESERVA
+
+const existeReservaPorId = async (id) => {
+
+    const existeId = await Reserva.findById(id);
+    if (!existeId) {
+        throw new Error(`El ID no existe`)
+    }
+}
+
+
+
 module.exports = {
     esRoleValido,
     emailExiste,
@@ -128,5 +140,6 @@ module.exports = {
     Tipo_habitacion_Existe,
     existeHabitacionPorId,
     existeServicioPorNombre,
-    existeServicioPorId
+    existeServicioPorId,
+    existeReservaPorId
 }

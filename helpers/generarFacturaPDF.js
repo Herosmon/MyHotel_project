@@ -97,7 +97,7 @@ doc.addTable([
     // border : {size: 0.1, color: '#cdcdcd'},
     
     headBackground : '#FBFCFC',
-    stripedColors: ["#1976d2 ", "#FBFBFB"],
+    stripedColors: ["#19d2d2", "#FBFBFC"],
     headFont : "Helvetica-Bold",
     headFontSize : 12,
     headHeight : 10,

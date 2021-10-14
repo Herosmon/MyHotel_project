@@ -1,7 +1,7 @@
 const {Router}= require('express');
 const { check } = require('express-validator');
-const { postReserva, putCancelarReserva, getReservaCliente } = require('../controllers/reserva');
-const { existeTipoHabitacionPorId } = require('../helpers/db-validators');
+const { postReserva, putCancelarReserva, getReservaCliente, getReservaEspecifica } = require('../controllers/reserva');
+const { existeTipoHabitacionPorId, existeReservaPorId } = require('../helpers/db-validators');
 const { validarJWT, tieneRole, validarCampos } = require('../middlewares');
 
 
@@ -20,6 +20,8 @@ router.post('/',[
 ,postReserva)
 
 
+
+
 router.put('/cancelar/:id',[
     validarJWT,
     tieneRole('USER'),
@@ -31,5 +33,16 @@ router.get('/',[
     tieneRole('USER'),
     validarCampos
 ], getReservaCliente)
+
+
+
+router.get('/:id',[
+    // validarJWT,
+    // esAdminRole,
+    check("id",'No es un ID valido').isMongoId(),
+    check("id").custom(existeReservaPorId),
+    validarCampos
+]
+,getReservaEspecifica);
 
 module.exports = router;
