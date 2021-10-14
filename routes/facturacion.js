@@ -1,6 +1,6 @@
 const {Router}= require('express');
 const { check } = require('express-validator');
-const { postFacturacion } = require('../controllers/facturacion');
+const { postFacturacion, getFacturaPago, getListaFacturas } = require('../controllers/facturacion');
 const { validarCampos, validarJWT, tieneRole} = require('../middlewares');
 
 
@@ -13,5 +13,26 @@ router.post('/:reserva',
     validarCampos
 ]
 ,postFacturacion)
+
+
+
+router.get('/:factura',
+[
+    validarJWT,
+    tieneRole('USER'),
+    validarCampos
+]
+,getFacturaPago)
+
+
+router.get('/',
+[
+    validarJWT,
+    tieneRole('USER'),
+    validarCampos
+]
+,getListaFacturas)
+
+
 
 module.exports = router;

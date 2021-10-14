@@ -29,8 +29,6 @@ const postGasto= async (req=request,res=response)=>{
    } catch (error) {
     res.status(500).json(notificacionSis(error));
    }
-    
-
 
 }
 

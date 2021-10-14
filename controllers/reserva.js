@@ -89,8 +89,7 @@ const putCancelarReserva = async (req = request, res = response)=>{
   //     msg: "Usted no tiene permiso para realizar esta acción"
   //   })
   // }
-      
-
+    
   const data =await Reserva.findByIdAndUpdate(id,{estado:'cancelada'})
   await Habitacion.findByIdAndUpdate(data.habitacion,{ocupado:false})
   return res.status(202).json({

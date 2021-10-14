@@ -14,6 +14,11 @@ const FacturacionSchema = Schema({
     ref: "Reserva",
     require: true,
   },
+  usuario: {
+    type: Schema.Types.ObjectId,
+    ref: "Usuario",
+    require: true,
+  },
 });
 FacturacionSchema.methods.toJSON = function () {
   const { __v, _id, ...fac } = this.toObject();
