@@ -16,9 +16,10 @@ class Server {
             tipo_habitacion:'/myhotel/tipoH',
             upload:'/myhotel/upload',
             servicio:'/myhotel/servicio',
-            reserva:'/myhotel/reserva'
-
-           
+            reserva:'/myhotel/reserva',
+            gasto:'/myhotel/gasto',
+            facturacion: '/myhotel/factura'
+            
             
 
         }
@@ -67,6 +68,9 @@ class Server {
         this.app.use(this.paths.upload, require("../routes/upload"));
         this.app.use(this.paths.servicio, require("../routes/servicio"));
         this.app.use(this.paths.reserva, require("../routes/reserva"));
+        this.app.use(this.paths.gasto, require("../routes/gasto"));
+        this.app.use(this.paths.facturacion, require("../routes/facturacion"));
+
     }
 
     listen() {

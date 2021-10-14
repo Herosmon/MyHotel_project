@@ -1,6 +1,6 @@
 const {Router}= require('express');
 const { check } = require('express-validator');
-const { postReserva, putCancelarReserva } = require('../controllers/reserva');
+const { postReserva, putCancelarReserva, getReservaCliente } = require('../controllers/reserva');
 const { existeTipoHabitacionPorId } = require('../helpers/db-validators');
 const { validarJWT, tieneRole, validarCampos } = require('../middlewares');
 
@@ -25,5 +25,11 @@ router.put('/cancelar/:id',[
     tieneRole('USER'),
     validarCampos
 ], putCancelarReserva);
+
+router.get('/',[
+    validarJWT,
+    tieneRole('USER'),
+    validarCampos
+], getReservaCliente)
 
 module.exports = router;

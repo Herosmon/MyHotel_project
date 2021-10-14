@@ -97,7 +97,24 @@ const putCancelarReserva = async (req = request, res = response)=>{
   })
 }
 
+
+const getReservaCliente = async (req = request, res = response) =>{
+  try {
+    const usuario=(req.usuario.id);
+
+    let servicio  = await Reserva.find({usuario}).populate('habitacion','numero')
+    servicio=servicio.reverse();
+    res.json({
+      msg: "Ok",
+      servicio,
+    });
+  } catch (error) {
+    res.status(500).json(notificacionSis(error));
+  }
+}
+
 module.exports = {
   postReserva,
-  putCancelarReserva
+  putCancelarReserva,
+  getReservaCliente
 };
