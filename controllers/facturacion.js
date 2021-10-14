@@ -1,11 +1,12 @@
 const { response, request } = require("express");
-
+const pdf = require("html-pdf");
 const moment = require("moment");
 const { construirPDF } = require("../helpers/generarFacturaPDF");
 
 const { notificacionSis } = require("../helpers/notification");
-const { Habitacion } = require("../models");
+const { Habitacion, Tipo_habitacion } = require("../models");
 const Gasto = require("../models/gasto");
+const habitacion = require("../models/habitacion/habitacion");
 
 const Reserva = require("../models/reserva");
 
@@ -18,17 +19,21 @@ const postFacturacion= async (req = request, res = response )=>{
 
         const {nombre,apellido,correo,telefono }=(req.usuario._doc);
 
-        const reservaActual=await Reserva.findById(reserva);
-        
+        const reservaActual=await Reserva.findById(reserva)
+                .populate("habitacion");
+   
+        const {categoria}= await Tipo_habitacion.findById(reservaActual.habitacion.tipo_habitacion)
 
         const fecha = moment().format("YYYY-MM-D h:mm:ss");
         const gasto= await Gasto.find({reserva}).populate('servicio','nombre')
+
+     
         let gasto_total=0;
         let gastosExtra=[];
         gasto.map((g)=>{
             gasto_total+=g.valor_total
             gastosExtra.push({
-                
+
                 nombre:g.servicio.nombre,
                 precio: g.valor_total,
                 fecha:moment(g.fecha).format("YYYY-MM-D"),
@@ -47,6 +52,7 @@ const postFacturacion= async (req = request, res = response )=>{
         const data={
             usuario:{ nombre,apellido,correo,telefono   },
             reserva:reservaActual,
+            tipo_habitacion:{categoria},
             gastosExtra,
             facturacion:{
                 valor_total,fecha
@@ -58,18 +64,29 @@ const postFacturacion= async (req = request, res = response )=>{
             
         // })
 
-        const stream= res.writeHead(200,{
-            'Content-Type':'application/pdf',
-            'Content-Disposition':'attachment;filename=factura.pdf'
+        pdf.create(construirPDF(data),[,config = {
+
+        "format": "Letter",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
+        "orientation": "portrait",
+
+        "border": {
+            "top": "2cm",            // default is 0, units: mm, cm, in, px
+            "right": "2cm",
+            "bottom": "2cm",
+            "left": "2cm"
+          },
+        }]).toStream((error, stream) => {
+            if (error) {
+                res.end("Error creando PDF: " + error)
+            } else {
+                res.setHeader("Content-Type", "application/pdf");
+                 res.setHeader('Content-Disposition','attachment;filename=factura.pdf');
+                stream.pipe(res);
+            }
         });
 
-        construirPDF(
-            (chunk)=>stream.write(chunk),
-            ()=>stream.end(),
-            data
 
-        )
-
+        
 
 
     } catch (error) {
@@ -78,6 +95,8 @@ const postFacturacion= async (req = request, res = response )=>{
     
 
 }
+
+
 
 
 

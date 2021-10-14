@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+</head>
+
+<body>
+
+
+
+    <div style="margin: 2cm;">
+        <table class="default" >
+            <tr>
+                <td width="300">
+                    <img width="100" height="100" src="https://res.cloudinary.com/dbitmtmjo/image/upload/v1634237144/logoMyhotel_gqudjk.jpg" alt="">
+                    <h1>MyHotel</h1>
+                </td>
+
+                <td>
+                    Número de reserva: {{numero_reserva}} <br />
+                    Numero de factura: {{numero_factura}} <br />
+                    Fecha de factura: {{fecha_factura}}
+
+                </td>
+
+
+            </tr>
+
+        </table>
+
+        <br/>
+        <table class="default ">
+
+            <tr>
+
+                <td width="300">
+                    <h2>Cliente</h2>
+                    <aside> Nombre: {{nombre_cliente}}</aside>
+                    <aside>Apellido: {{apellido_cliente}}</aside>
+                    <aside>Correo: {{correo_cliente}}</aside>
+                    <br>
+
+                </td>
+                <td>
+
+                    <h2>Reserva</h2>
+
+                    <aside>Tipo de habitación: {{tipo_habitacion}}</aside>
+                    <aside>Fecha inicio: {{fechaInicioReserva}}</aside>
+                    <aside>Fecha fin: {{fechaFinReserva}}</aside>
+                    <aside>Valor de reserva: {{precio_reserva}}</aside>
+                </td>
+
+
+
+            </tr>
+
+
+
+        </table>
+
+
+
+
+
+
+
+
+        <h2>Servicio Extra</h2>
+
+
+
+    </div>
+
+
+</body>
+
+</html>
