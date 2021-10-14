@@ -1,5 +1,5 @@
 const { response, request } = require("express");
-const pdf = require("html-pdf");
+
 const moment = require("moment");
 const { construirPDF } = require("../helpers/generarFacturaPDF");
 
@@ -55,36 +55,18 @@ const postFacturacion= async (req = request, res = response )=>{
             tipo_habitacion:{categoria},
             gastosExtra,
             facturacion:{
-                valor_total,fecha
+                valor_total,fecha ,
+
+                id_facturacion:'1234567890'
             }
         }
 
-        // return res.status(201).json({
-        //    data
+        return res.status(201).json({
+           data
             
-        // })
+        })
 
-        pdf.create(construirPDF(data),[,config = {
-
-        "format": "Letter",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-        "orientation": "portrait",
-
-        "border": {
-            "top": "2cm",            // default is 0, units: mm, cm, in, px
-            "right": "2cm",
-            "bottom": "2cm",
-            "left": "2cm"
-          },
-        }]).toStream((error, stream) => {
-            if (error) {
-                res.end("Error creando PDF: " + error)
-            } else {
-                res.setHeader("Content-Type", "application/pdf");
-                 res.setHeader('Content-Disposition','attachment;filename=factura.pdf');
-                stream.pipe(res);
-            }
-        });
-
+ 
 
         
 
