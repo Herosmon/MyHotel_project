@@ -102,7 +102,7 @@ const getReservaCliente = async (req = request, res = response) =>{
   try {
     const usuario=(req.usuario.id);
 
-    let servicio  = await Reserva.find({usuario}).populate('habitacion','numero')
+    let servicio  = await Reserva.find({usuario,estado:'activa'}).populate('habitacion','numero')
     servicio=servicio.reverse();
     res.json({
       msg: "Ok",

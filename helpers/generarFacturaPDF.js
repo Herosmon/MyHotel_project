@@ -94,9 +94,16 @@ doc.addTable([
     border: null,
     width: "fill_body",
     striped: true,
-    headBackground : '#abc6f0',
-    stripedColors: ["#FDFEFE", "#AEB6BF"],
+    // border : {size: 0.1, color: '#cdcdcd'},
+    
+    headBackground : '#FBFCFC',
+    stripedColors: ["#1976d2 ", "#FBFBFB"],
+    headFont : "Helvetica-Bold",
+    headFontSize : 12,
+    headHeight : 10,
+    cellsFont : "Helvetica",
     cellsPadding: 10,
+    cellsFontSize : 12,
     marginLeft: 45,
     marginRight: 45,
     headAlign: 'center'

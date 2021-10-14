@@ -28,6 +28,7 @@ const postFacturacion= async (req = request, res = response )=>{
         gasto.map((g)=>{
             gasto_total+=g.valor_total
             gastosExtra.push({
+                
                 nombre:g.servicio.nombre,
                 precio: g.valor_total,
                 fecha:moment(g.fecha).format("YYYY-MM-D"),
