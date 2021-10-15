@@ -5,7 +5,7 @@ const { notificacionSis } = require("../helpers/notification");
 
 const getReporteServicio = async (req, res = response) => {
 
-    const 
+    console.log('lalala');
 
 };
 
