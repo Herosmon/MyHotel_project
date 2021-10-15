@@ -69,8 +69,8 @@ const postFacturacion= async (req = request, res = response )=>{
 
         
         //ACTUALIZAR HABITACION
-        // const data =await Reserva.findByIdAndUpdate(reservaActual.id,{estado:'finalizada'})
-        // await Habitacion.findByIdAndUpdate(data.habitacion,{ocupado:false})
+        const finaldata =await Reserva.findByIdAndUpdate(reservaActual.id,{estado:'finalizada'})
+        await Habitacion.findByIdAndUpdate(finaldata.habitacion,{ocupado:false})
         
         return res.status(202).json({
             data       
