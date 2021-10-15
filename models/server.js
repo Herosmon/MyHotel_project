@@ -18,7 +18,8 @@ class Server {
             servicio:'/myhotel/servicio',
             reserva:'/myhotel/reserva',
             gasto:'/myhotel/gasto',
-            facturacion: '/myhotel/factura'
+            facturacion: '/myhotel/factura',
+            reporte:'/myhotel/reporte'
             
             
 
@@ -70,6 +71,7 @@ class Server {
         this.app.use(this.paths.reserva, require("../routes/reserva"));
         this.app.use(this.paths.gasto, require("../routes/gasto"));
         this.app.use(this.paths.facturacion, require("../routes/facturacion"));
+        this.app.use(this.paths.reporte, require("../routes/reporte"));
 
     }
 

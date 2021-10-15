@@ -123,7 +123,7 @@ const getFacturaPago=async (req = request, res = response )=>{
         gastosExtra,
         facturacion:{
             valor_total:facturacion.valor_total.toLocaleString('de-DE'),
-            fecha:facturacion.id ,
+            fecha:facturacion.fecha ,
             id_facturacion:facturacion.id,
             gasto_extra_total: gasto_total.toLocaleString('de-DE'),
     
