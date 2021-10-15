@@ -60,6 +60,7 @@ const getReporteClienteFrecuente =async(req, res = response) => {
              nombre:data.details[0].nombre+''+data.details[0].apellido,
              total_visitas:data.total
          })
+         topClienteFrecuente=topClienteFrecuente.sort(((a,b)=> b.total - a.total))
         })
 
 
